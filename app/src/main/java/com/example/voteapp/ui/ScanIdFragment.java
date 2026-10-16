@@ -52,7 +52,9 @@ public class ScanIdFragment extends Fragment {
         super.onCreate(savedInstanceState);
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.TakePicturePreview(), bitmap -> {
             if (bitmap != null) {
-                imagePreview.setImageBitmap(bitmap);
+                if (imagePreview != null) {
+                    imagePreview.setImageBitmap(bitmap);
+                }
                 runTextRecognition(bitmap);
             }
         });
@@ -161,7 +163,9 @@ public class ScanIdFragment extends Fragment {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 cameraLauncher.launch(null);
             } else {
-                Toast.makeText(requireContext(), "Camera permission denied", Toast.LENGTH_SHORT).show();
+                if (getContext() != null) {
+                    Toast.makeText(requireContext(), "Camera permission denied", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }

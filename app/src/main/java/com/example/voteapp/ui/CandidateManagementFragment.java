@@ -77,7 +77,7 @@ public class CandidateManagementFragment extends Fragment {
         pendingAdapter = new PendingAdapter();
         recyclerPending.setAdapter(pendingAdapter);
         
-        activeAdapter = new CandidateListAdapter();
+        activeAdapter = new CandidateListAdapter(this::confirmDeleteCandidate);
         recyclerActive.setAdapter(activeAdapter);
 
         loadPendingRequests();
@@ -177,6 +177,30 @@ public class CandidateManagementFragment extends Fragment {
         });
     }
 
+    private void confirmDeleteCandidate(CandidateEntity candidate) {
+        if (!isAdded() || getContext() == null || candidate == null) return;
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Delete Candidate")
+                .setMessage("Are you sure you want to delete candidate " + candidate.name + " from the active list?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    if (candidate.firebaseId != null && !candidate.firebaseId.isEmpty()) {
+                        mDatabase.child("candidates").child(candidate.firebaseId).removeValue()
+                                .addOnSuccessListener(aVoid -> {
+                                    if (isAdded() && getContext() != null) {
+                                        Toast.makeText(requireContext(), "Candidate removed", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    if (isAdded() && getContext() != null) {
+                                        Toast.makeText(requireContext(), "Delete failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, null)
+                .show();
+    }
+
     private void approveCandidate(String uid, UserEntity user) {
         mDatabase.child("users").child(uid).child("status").setValue("approved")
                 .addOnSuccessListener(aVoid -> {
@@ -186,13 +210,29 @@ public class CandidateManagementFragment extends Fragment {
                             user.partyName != null ? user.partyName : "Registered", 
                             user.gender != null ? user.gender : "Male",
                             user.phoneNumber != null ? user.phoneNumber : "");
-                    Toast.makeText(requireContext(), "Candidate approved and listed!", Toast.LENGTH_SHORT).show();
+                    if (isAdded() && getContext() != null) {
+                        Toast.makeText(requireContext(), "Candidate approved and listed!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    if (isAdded() && getContext() != null) {
+                        Toast.makeText(requireContext(), "Approval failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 });
     }
 
     private void rejectCandidate(String uid) {
         mDatabase.child("users").child(uid).child("status").setValue("rejected")
-                .addOnSuccessListener(aVoid -> Toast.makeText(requireContext(), "Request rejected", Toast.LENGTH_SHORT).show());
+                .addOnSuccessListener(aVoid -> {
+                    if (isAdded() && getContext() != null) {
+                        Toast.makeText(requireContext(), "Request rejected", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    if (isAdded() && getContext() != null) {
+                        Toast.makeText(requireContext(), "Rejection failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void addCandidateToActiveList(String name, String dept, String party, String gender, String phone) {

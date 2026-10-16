@@ -331,9 +331,16 @@ public class VoteFragment extends Fragment {
             return;
         }
 
+        // Fast local duplicate check to protect against double-voting even when offline
+        if (voteDao.getVoteCountForStudent(currentStudentId) > 0) {
+            Toast.makeText(requireContext(), "Already voted (verified in local election record)", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         mDatabase.child("votes").child(currentStudentId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!isAdded() || getContext() == null) return;
                 if (snapshot.exists()) {
                     Toast.makeText(requireContext(), "Already voted", Toast.LENGTH_SHORT).show();
                 } else {
@@ -341,11 +348,16 @@ public class VoteFragment extends Fragment {
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {}
+            public void onCancelled(@NonNull DatabaseError error) {
+                if (!isAdded() || getContext() == null) return;
+                // If offline, proceed with local check passed
+                showFeedbackDialog(candidateName);
+            }
         });
     }
 
     private void showFeedbackDialog(String candidateName) {
+        if (!isAdded() || getContext() == null) return;
         View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_feedback, null);
         TextView textTitle = dialogView.findViewById(R.id.textFeedbackCandidate);
         TextInputEditText editFeedback = dialogView.findViewById(R.id.editFeedbackText);
@@ -370,6 +382,7 @@ public class VoteFragment extends Fragment {
     }
 
     private void startBiometricAuth(String candidateName, String feedback) {
+        if (!isAdded() || getContext() == null) return;
         BiometricManager manager = BiometricManager.from(requireContext());
         if (manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) != BiometricManager.BIOMETRIC_SUCCESS) {
             castVote(candidateName, feedback);
@@ -393,6 +406,7 @@ public class VoteFragment extends Fragment {
     }
 
     private void castVote(String candidateName, String feedback) {
+        if (!isAdded() || getContext() == null) return;
         VoteEntity vote = new VoteEntity(currentStudentId, candidateName, System.currentTimeMillis());
         if (lastKnownLocation != null) {
             vote.latitude = lastKnownLocation.getLatitude();
@@ -403,6 +417,7 @@ public class VoteFragment extends Fragment {
         voteDao.insert(vote);
 
         mDatabase.child("votes").child(currentStudentId).setValue(vote).addOnSuccessListener(aVoid -> {
+            if (!isAdded() || getContext() == null) return;
             Toast.makeText(requireContext(), "Vote cast for " + candidateName, Toast.LENGTH_SHORT).show();
             if (getView() != null) {
                 LottieAnimationView success = getView().findViewById(R.id.lottieVoteSuccess);
@@ -411,6 +426,9 @@ public class VoteFragment extends Fragment {
                     success.playAnimation();
                 }
             }
-        }).addOnFailureListener(e -> Toast.makeText(requireContext(), "Saved locally, sync when online", Toast.LENGTH_SHORT).show());
+        }).addOnFailureListener(e -> {
+            if (!isAdded() || getContext() == null) return;
+            Toast.makeText(requireContext(), "Saved locally, sync when online", Toast.LENGTH_SHORT).show();
+        });
     }
 }

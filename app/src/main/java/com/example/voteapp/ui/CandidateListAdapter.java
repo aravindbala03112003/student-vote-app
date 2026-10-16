@@ -18,7 +18,20 @@ import java.util.List;
 
 public class CandidateListAdapter extends RecyclerView.Adapter<CandidateListAdapter.CandidateViewHolder> {
 
+    public interface OnCandidateLongClickListener {
+        void onCandidateLongClicked(CandidateEntity candidate);
+    }
+
     private final List<CandidateEntity> items = new ArrayList<>();
+    private final OnCandidateLongClickListener longClickListener;
+
+    public CandidateListAdapter() {
+        this(null);
+    }
+
+    public CandidateListAdapter(OnCandidateLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
+    }
 
     public void submitList(List<CandidateEntity> list) {
         items.clear();
@@ -62,6 +75,15 @@ public class CandidateListAdapter extends RecyclerView.Adapter<CandidateListAdap
         } else {
             holder.imageGender.setImageResource(R.drawable.ic_candidate_male);
             holder.imageGender.setColorFilter(Color.BLUE);
+        }
+
+        if (longClickListener != null) {
+            holder.itemView.setOnLongClickListener(v -> {
+                longClickListener.onCandidateLongClicked(c);
+                return true;
+            });
+        } else {
+            holder.itemView.setOnLongClickListener(null);
         }
     }
 

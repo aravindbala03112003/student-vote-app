@@ -236,7 +236,11 @@ public class ResultsFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(uri, "application/pdf");
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(intent);
+            try {
+                startActivity(intent);
+            } catch (android.content.ActivityNotFoundException e) {
+                Toast.makeText(requireContext(), "PDF saved to device storage (no PDF viewer app found)", Toast.LENGTH_LONG).show();
+            }
             
         } catch (IOException e) {
             Toast.makeText(requireContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();

@@ -108,9 +108,17 @@ public class CandidateProfileFragment extends Fragment {
     }
 
     private String uriToBase64(Uri uri) {
-        try {
-            InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
+        if (getContext() == null) return null;
+        try (InputStream inputStream = requireContext().getContentResolver().openInputStream(uri)) {
+            if (inputStream == null) {
+                Toast.makeText(getContext(), "Cannot open selected file", Toast.LENGTH_SHORT).show();
+                return null;
+            }
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            if (bitmap == null) {
+                Toast.makeText(getContext(), "Unable to decode image", Toast.LENGTH_SHORT).show();
+                return null;
+            }
             
             // Resize to keep database entry lightweight
             int maxSize = 800;
@@ -180,12 +188,20 @@ public class CandidateProfileFragment extends Fragment {
             return;
         }
 
+        if (userId == null) {
+            userId = FirebaseAuth.getInstance().getUid();
+        }
+        if (userId == null) {
+            Toast.makeText(getContext(), "Authentication required. Please re-login.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (progressBar != null) progressBar.setVisibility(View.VISIBLE);
 
         String gender = "Male";
         int checkedId = radioGenderGroup.getCheckedRadioButtonId();
         if (checkedId != -1) {
-            RadioButton rb = getView().findViewById(checkedId);
+            RadioButton rb = radioGenderGroup.findViewById(checkedId);
             if (rb != null && rb.getTag() != null) {
                 gender = rb.getTag().toString();
             }
@@ -205,9 +221,14 @@ public class CandidateProfileFragment extends Fragment {
         updates.put("status", "pending");
 
         mDatabase.child("users").child(userId).updateChildren(updates).addOnSuccessListener(aVoid -> {
+            if (!isAdded() || getContext() == null) return;
             if (progressBar != null) progressBar.setVisibility(View.GONE);
             Toast.makeText(getContext(), "Application Submitted!", Toast.LENGTH_SHORT).show();
             loadProfileData();
+        }).addOnFailureListener(e -> {
+            if (!isAdded() || getContext() == null) return;
+            if (progressBar != null) progressBar.setVisibility(View.GONE);
+            Toast.makeText(getContext(), "Submission failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 }

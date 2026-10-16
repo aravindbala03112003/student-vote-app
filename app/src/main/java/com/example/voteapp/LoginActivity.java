@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
     private void handleLoginSuccess(UserEntity user) {
         if (SessionManager.ROLE_STUDENT.equals(user.role)) {
             BiometricManager manager = BiometricManager.from(this);
-            int can = manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.DEVICE_CREDENTIAL);
+            int can = manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG);
             if (can != BiometricManager.BIOMETRIC_SUCCESS) {
                 completeLogin(user);
                 return;

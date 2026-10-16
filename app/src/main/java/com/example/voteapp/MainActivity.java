@@ -19,6 +19,7 @@ import com.example.voteapp.ui.CandidateProfileFragment;
 import com.example.voteapp.util.SessionManager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         topAppBar = findViewById(R.id.topAppBar);
         topAppBar.inflateMenu(R.menu.top_appbar_menu);
         topAppBar.setOnMenuItemClickListener(this::onTopAppBarMenuItemClicked);
+        updateTopAppBarMenuVisibility();
+
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         updateBottomNavVisibility();
@@ -53,12 +56,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void updateTopAppBarMenuVisibility() {
+        if (topAppBar == null || topAppBar.getMenu() == null) return;
+        MenuItem clearItem = topAppBar.getMenu().findItem(R.id.action_clear_data);
+        if (clearItem != null) {
+            clearItem.setVisible(SessionManager.isAdmin(this));
+        }
+    }
+
     private boolean onTopAppBarMenuItemClicked(@NonNull MenuItem item) {
         final int itemId = item.getItemId();
         if (itemId == R.id.action_logout) {
             logout();
             return true;
         } else if (itemId == R.id.action_clear_data) {
+            if (!SessionManager.isAdmin(this)) {
+                Toast.makeText(this, "Admin permission required", Toast.LENGTH_SHORT).show();
+                return true;
+            }
             new AlertDialog.Builder(this)
                 .setTitle("Clear All Data")
                 .setMessage("This will delete all candidates, votes, and geofence data from the Cloud. Are you sure?")
@@ -72,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearCloudDatabaseBranches() {
+        if (!SessionManager.isAdmin(this)) {
+            Toast.makeText(this, "Admin permission required", Toast.LENGTH_SHORT).show();
+            return;
+        }
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> updates = new HashMap<>();
         updates.put("candidates", null);
@@ -90,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
+        FirebaseAuth.getInstance().signOut();
         SessionManager.clearSession(this);
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
