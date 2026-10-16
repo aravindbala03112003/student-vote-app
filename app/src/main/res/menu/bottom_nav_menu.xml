@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:title="Home"
+        android:icon="@android:drawable/ic_menu_view" />
+
+    <item
+        android:id="@+id/navigation_vote"
+        android:title="Vote"
+        android:icon="@android:drawable/ic_menu_set_as" />
+
+    <item
+        android:id="@+id/navigation_scan"
+        android:title="Scan ID"
+        android:icon="@android:drawable/ic_menu_camera" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:title="Profile"
+        android:icon="@android:drawable/ic_menu_edit" />
+
+    <item
+        android:id="@+id/navigation_broadcast"
+        android:title="Broadcasts"
+        android:icon="@android:drawable/ic_dialog_email" />
+</menu>

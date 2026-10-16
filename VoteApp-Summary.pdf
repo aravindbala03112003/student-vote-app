@@ -1,0 +1,90 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Length 1997 >>
+stream
+BT
+/F1 18 Tf
+50 760 Td
+(VoteApp - Campus Election Android App \\(repo summary\\)) Tj
+/F1 12 Tf
+14 TL
+T*
+(What it is: Android app for campus elections using Firebase Auth and Realtime DB.) Tj
+T*
+(Who it's for: Campus election admins, student voters, and candidate applicants.) Tj
+T*
+T*
+(What it does:) Tj
+T*
+(- Role-based login via Firebase Auth; student login can require fingerprint.) Tj
+T*
+(- Capture student IDs with camera and ML Kit; save locally for voting.) Tj
+T*
+(- Geofenced, time-bound sessions; fused location checks inside admin-set radius.) Tj
+T*
+(- Voting syncs to Firebase and Room, blocks duplicate student IDs, tags time/location.) Tj
+T*
+(- Candidate flow: applicants upload profile/docs; admins approve or reject and publish.) Tj
+T*
+(- Admin tools: broadcasts with optional SMS, clear cloud data, results charts and PDF export.) Tj
+T*
+T*
+(How it works:) Tj
+T*
+(- Shell: Splash -> Login/Register -> MainActivity with role-aware tabs.) Tj
+T*
+(- Tabs cover voting, ID scan, broadcasts, geofence, results, candidates.) Tj
+T*
+(- Cloud: Firebase Auth + Realtime DB for users, candidates, votes, geofence, broadcasts.) Tj
+T*
+(- Offline persistence enabled in VoteApp Application.) Tj
+T*
+(- Local cache: Room stores votes, candidates, users, broadcasts, geofence.) Tj
+T*
+(- SessionManager keeps role, name, department, year in SharedPreferences.) Tj
+T*
+(- Services: ML Kit text recognition and fused location for geofence checks.) Tj
+T*
+(- Services: BiometricPrompt for login/vote; MPAndroidChart and PdfDocument for results.) Tj
+T*
+T*
+(How to run:) Tj
+T*
+(1\\) Open in Android Studio \\(compileSdk 35, Java 11\\); let Gradle sync.) Tj
+T*
+(2\\) Keep or replace app/src/google-services.json with your Firebase config.) Tj
+T*
+(3\\) Enable Firebase Auth and Realtime Database in the project.) Tj
+T*
+(4\\) Run on Play-services device/emulator; grant Camera and Location; SMS only for broadcasts.) Tj
+T*
+(5\\) Register accounts; pick admin or candidate role to access those screens.) Tj
+T*
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000311 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+2360
+%%EOF

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_card_rounded">
+
+        <TextView
+            android:id="@+id/textWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="University Voting System"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            android:textStyle="bold"
+            android:paddingBottom="8dp"
+            android:textColor="@color/color_on_surface"
+            android:textAlignment="center"
+            android:gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/textDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="..."
+            android:paddingBottom="8dp"
+            android:textAlignment="center" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#DDDDDD"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGoToVote"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Go to Voting"
+            app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGoToProfile"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Candidate Profile"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:icon="@android:drawable/ic_menu_edit"
+            app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGoToScan"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Scan Student ID"
+            android:layout_marginTop="8dp"
+            app:icon="@android:drawable/ic_menu_camera"
+            app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGoToBroadcasts"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Broadcasts"
+            android:layout_marginTop="8dp"
+            app:icon="@android:drawable/ic_dialog_email"
+            app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGoToGeofence"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Configure Session &amp; Geofence"
+            android:layout_marginTop="8dp"
+            app:icon="@android:drawable/ic_menu_mylocation"
+            app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGoToResults"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Voting Results"
+            android:layout_marginTop="8dp"
+            app:icon="@android:drawable/ic_menu_today"
+            app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGoToCandidates"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Manage Candidates"
+            android:layout_marginTop="8dp"
+            app:icon="@android:drawable/ic_menu_agenda"
+            app:iconPadding="8dp" />
+
+    </LinearLayout>
+</ScrollView>

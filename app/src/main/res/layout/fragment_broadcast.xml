@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_margin="16dp"
+    android:background="@drawable/bg_card_rounded">
+
+    <TextView
+        android:id="@+id/textCreateBroadcastLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Broadcast"
+        android:textStyle="bold"
+        android:paddingBottom="4dp"
+        android:fontFamily="@font/app_heading"
+        android:textColor="@color/color_on_surface"
+        android:textAlignment="center"
+        android:gravity="center_horizontal" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutBroadcastTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editBroadcastTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutBroadcastMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Message"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editBroadcastMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="2" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutBroadcastPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Mobile numbers (comma separated, optional)"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editBroadcastPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonSendBroadcast"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="Send Broadcast"
+        android:layout_marginTop="8dp"
+        app:icon="@android:drawable/ic_menu_send"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp" />
+
+    <View
+        android:id="@+id/broadcastDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DDDDDD"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Broadcast history"
+        android:textStyle="bold"
+        android:paddingBottom="4dp"
+        android:textAlignment="center" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerBroadcasts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layoutAnimation="@anim/layout_fall_down" />
+
+</LinearLayout>

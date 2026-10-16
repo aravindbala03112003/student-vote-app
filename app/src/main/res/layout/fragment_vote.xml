@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_card_rounded">
+
+        <TextView
+            android:id="@+id/textLocationStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Checking campus location..."
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <TextView
+            android:id="@+id/textStudentIdStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Student ID status"
+            android:paddingBottom="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select a candidate and confirm with fingerprint:" 
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layoutAdminCandidates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Admin: configure candidate names"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Candidate 1 name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editCandidate1Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Candidate 2 name"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editCandidate2Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Candidate 3 name"
+                android:layout_marginTop="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editCandidate3Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSaveCandidates"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Save candidates"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <!-- Old fixed candidate cards are kept in layout but hidden; dynamic list below is used instead -->
+
+        <TextView
+            android:id="@+id/textNoCandidates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No candidates configured. Ask admin to add candidates."
+            android:paddingBottom="8dp"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerVoteCandidates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutAnimation="@anim/layout_fall_down" />
+
+        <include
+            layout="@layout/view_vote_success" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            app:cardUseCompatPadding="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/textCandidate1Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Candidate A"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textCandidate1Votes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Votes: 0"
+                    android:paddingTop="4dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonVoteCandidate1"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vote for Candidate A"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardUseCompatPadding="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/textCandidate2Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Candidate B"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textCandidate2Votes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Votes: 0"
+                    android:paddingTop="4dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonVoteCandidate2"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vote for Candidate B"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:cardUseCompatPadding="true"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/textCandidate3Name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Candidate C"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textCandidate3Votes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Votes: 0"
+                    android:paddingTop="4dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonVoteCandidate3"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vote for Candidate C"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/layoutResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Overall results (bar graph)"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Candidate 1" />
+
+            <ProgressBar
+                android:id="@+id/progressCandidate1"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Candidate 2"
+                android:layout_marginTop="8dp" />
+
+            <ProgressBar
+                android:id="@+id/progressCandidate2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Candidate 3"
+                android:layout_marginTop="8dp" />
+
+            <ProgressBar
+                android:id="@+id/progressCandidate3"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false" />
+
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonExportResults"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Export vote results (admin)"
+            android:layout_marginTop="16dp"
+            app:icon="@android:drawable/ic_menu_share"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonViewResults"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View results"
+            android:layout_marginTop="8dp"
+            app:icon="@android:drawable/ic_menu_view"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp" />
+
+    </LinearLayout>
+</ScrollView>

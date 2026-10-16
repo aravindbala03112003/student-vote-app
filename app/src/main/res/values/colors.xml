@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Brand palette -->
+    <color name="color_primary">#2962FF</color>
+    <color name="color_on_primary">#FFFFFFFF</color>
+    <color name="color_primary_variant">#0039CB</color>
+
+    <!-- Secondary sky blue -->
+    <color name="color_secondary">#03A9F4</color>
+    <color name="color_on_secondary">#FFFFFFFF</color>
+
+    <!-- Surfaces and background per spec -->
+    <color name="color_background">#F1F5F9</color>
+    <color name="color_surface">#FFFFFFFF</color>
+    <color name="color_on_surface">#1F2937</color>
+
+    <color name="color_chip">#E3F2FD</color>
+    <color name="color_divider">#1F000000</color>
+</resources>
